@@ -190,16 +190,12 @@ class iSniffer(object):
                     clientDict[essid] += 1
                 else:
                     clientDict[essid] = 1
+
+        topSSID = 0
+        for ssid in clientDict.items():
+
         print('Total hits per SSID:')
         pprint(clientDict)
-    
-        # make_table(lambda l:"%%-%is" % l, lambda l:"%%-%is" % l, "", *args, **kargs)
-        #make_table(self.ap.items(), lambda l: str(l))
-        # lambda l: ",".join(['"%s"' % x for x in [self.ap[l]['ssid'], self.ap[l]['cli'], self.ap[l]['lastseen']]]))
-        # print(",".join(["ssid", "cli", "lastseen"]))
-        # for key in self.ap:
-        # print(",".join(['"%s"' % x for x in [self.ap[key]['ssid'], self.ap[key]['cli'], self.ap[key]['lastseen']]]))
-
 
 
 if __name__ == '__main__':
