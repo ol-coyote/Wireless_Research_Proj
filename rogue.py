@@ -29,7 +29,7 @@ def createAP(iface, ssid):
 if __name__ == '__main__':
     parser = ArgumentParser('RogueAP', description='Create a rogue access point',
                             formatter_class=ArgumentDefaultsHelpFormatter)
-    parser.add_argument('-i', '--interface', default='en1', required=False, help='Interface to used')
+    parser.add_argument('-i', '--interface', default='wlan0', required=False, help='Interface to used')
     parser.add_argument('-s', '--ssid', default='testSSID', required=False, help='SSID to create')
     args = parser.parse_args()
 
