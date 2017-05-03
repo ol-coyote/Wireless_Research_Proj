@@ -28,6 +28,14 @@ class iSniffer(object):
         self.aps = {}
         self.clients = {}
 
+    def mac_info(self, mac):
+        global macf
+        maco = EUI(mac)
+        try:
+            macf = maco.oui.registration().org
+        except NotRegisteredError:
+            macf = "Not available"
+        return macf
 
     # Probe requests from clients
     def handle_probe(self, pkt):
@@ -36,6 +44,9 @@ class iSniffer(object):
         else:
             essid = 'Hidden SSID'
         client = pkt[Dot11].addr2
+	
+	# Obtain manufacturer
+	self.mac_info(client)
 
         if client in self.whitelist or essid in self.whitelist:
             #TODO: add logging
@@ -44,17 +55,16 @@ class iSniffer(object):
         # New client
         if client not in self.clients:
             self.clients[client] = []
-            print('[!] New client:  %s ' % client)
+            print('[!] New Client:  %s | %s' % (client, macf))
 	    with open(file_list[1],"a") as myFile:
-		temp1 = "client:  %s\n" % client
+		temp1 = "Client:  %s | Manufacturer: %s\n" % (client, macf)
 		myFile.write(temp1)
 
         if essid not in self.clients[client]:
             self.clients[client].append(essid)
-	    self.clients[client].append(bssid)
-            print('[+] New ProbeRequest: from %s to %s bssid: %s' % (client, essid))
+            print('[+] New Probe Request: from %s to %s' % (client, essid))
             with open(file_list[2],"a") as myFile:
-		myFile.write( 'ProbeRequest: from %s to %s\n' % (client, essid))
+		myFile.write('Probe Request: from %s to %s\n' % (client, essid))
 
     def handle_beacon(self, pkt):
 
@@ -172,7 +182,16 @@ class iSniffer(object):
         print('Clients:')
         pprint(self.clients)
 
-
+        clientDict = {}
+        for c in self.clients:
+            for essid in self.clients[c]:
+                if clientDict.has_key(essid):
+                    clientDict[essid] += 1
+                else:
+                    clientDict[essid] = 1
+        print('Total hits per SSID:')
+        pprint(clientDict)
+	
         # make_table(lambda l:"%%-%is" % l, lambda l:"%%-%is" % l, "", *args, **kargs)
         #make_table(self.ap.items(), lambda l: str(l))
         # lambda l: ",".join(['"%s"' % x for x in [self.ap[l]['ssid'], self.ap[l]['cli'], self.ap[l]['lastseen']]]))
