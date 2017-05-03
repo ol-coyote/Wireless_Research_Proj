@@ -44,9 +44,9 @@ class iSniffer(object):
         else:
             essid = 'Hidden SSID'
         client = pkt[Dot11].addr2
-	
-	# Obtain manufacturer
-	self.mac_info(client)
+    
+        # Obtain manufacturer
+        self.mac_info(client)
 
         if client in self.whitelist or essid in self.whitelist:
             #TODO: add logging
@@ -56,15 +56,15 @@ class iSniffer(object):
         if client not in self.clients:
             self.clients[client] = []
             print('[!] New Client:  %s | %s' % (client, macf))
-	    with open(file_list[1],"a") as myFile:
-		temp1 = "Client:  %s | Manufacturer: %s\n" % (client, macf)
-		myFile.write(temp1)
+        with open(file_list[1],"a") as myFile:
+            temp1 = "Client:  %s | Manufacturer: %s\n" % (client, macf)
+            myFile.write(temp1)
 
         if essid not in self.clients[client]:
             self.clients[client].append(essid)
             print('[+] New Probe Request: from %s to %s' % (client, essid))
             with open(file_list[2],"a") as myFile:
-		myFile.write('Probe Request: from %s to %s\n' % (client, essid))
+            myFile.write('Probe Request: from %s to %s\n' % (client, essid))
 
     def handle_beacon(self, pkt):
 
@@ -115,13 +115,13 @@ class iSniffer(object):
         # print "NEW AP: %r [%s], channed %d, %s" % (ssid, bssid, channel,' / '.join(crypto))
         # print "Target: %s Source: %s SSID: %s RSSi: %d" % (pkt.addr3, pkt.addr2, pkt.getlayer(Dot11ProbeReq).info, rssi)
         enc = '/'.join(crypto)
-	
+    
         if bssid not in self.aps:
             self.aps[bssid] = (channel, essid, bssid, enc, rssi)
             print "[+] New AP {0:5}\t{1:20}\t{2:20}\t{3:5}\t{4:4}".format(channel, essid, bssid, enc, rssi)
-	    with open(file_list[0],"a") as myFile:
-	        myFile.write("[+] New AP {0:5}\t{1:20}\t{2:20}\t{3:5}\t{4:4}\n".format(channel, essid, bssid, enc, rssi));
-	    
+        with open(file_list[0],"a") as myFile:
+            myFile.write("[+] New AP {0:5}\t{1:20}\t{2:20}\t{3:5}\t{4:4}\n".format(channel, essid, bssid, enc, rssi));
+        
 
 
     def pkt_handler(self, pkt):
@@ -191,7 +191,7 @@ class iSniffer(object):
                     clientDict[essid] = 1
         print('Total hits per SSID:')
         pprint(clientDict)
-	
+    
         # make_table(lambda l:"%%-%is" % l, lambda l:"%%-%is" % l, "", *args, **kargs)
         #make_table(self.ap.items(), lambda l: str(l))
         # lambda l: ",".join(['"%s"' % x for x in [self.ap[l]['ssid'], self.ap[l]['cli'], self.ap[l]['lastseen']]]))
