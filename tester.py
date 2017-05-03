@@ -9,13 +9,14 @@ from datetime import datetime
 from time import time
 from pprint import pprint
 from argparse import ArgumentParser, ArgumentDefaultsHelpFormatter
+from netaddr import *
 
 __author__ = '090h'
 __license__ = 'GPL'
 
 PROBE_REQUEST_TYPE = 0
 PROBE_REQUEST_SUBTYPE = 4
-FILE_EXT = "./Test/file_"
+FILE_EXT = "./Logs/file_"
 class iSniffer(object):
 
 
@@ -64,7 +65,7 @@ class iSniffer(object):
             self.clients[client].append(essid)
             print('[+] New Probe Request: from %s to %s' % (client, essid))
             with open(file_list[2],"a") as myFile:
-            myFile.write('Probe Request: from %s to %s\n' % (client, essid))
+                myFile.write('Probe Request: from %s to %s\n' % (client, essid))
 
     def handle_beacon(self, pkt):
 
