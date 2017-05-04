@@ -28,7 +28,7 @@ class iSniffer(object):
         self.verbose = verbose
         self.aps = {}
         self.clients = {}
-
+    # ~~~~~~~~~~~~~~~~~~~~ Code Injected Here ~~~~~~~~~~~~~~~~~~~~
     def mac_info(self, mac):
         global macf
         maco = EUI(mac)
@@ -37,6 +37,7 @@ class iSniffer(object):
         except NotRegisteredError:
             macf = "Not available"
         return macf
+    # ~~~~~~~~~~~~~~~~~~~~ Code Injected Here ~~~~~~~~~~~~~~~~~~~~
 
     # Probe requests from clients
     def handle_probe(self, pkt):
@@ -56,16 +57,20 @@ class iSniffer(object):
         # New client
         if client not in self.clients:
             self.clients[client] = []
+        # ~~~~~~~~~~~~~~~~~~~~ Code Injected Here ~~~~~~~~~~~~~~~~~~~~    
             print('[!] New Client:  %s | %s' % (client, macf))
         with open(file_list[1],"a") as myFile:
             temp1 = "Client:  %s | Manufacturer: %s\n" % (client, macf)
             myFile.write(temp1)
-
+        # ~~~~~~~~~~~~~~~~~~~~ Code Injected Here ~~~~~~~~~~~~~~~~~~~~
+        
         if essid not in self.clients[client]:
             self.clients[client].append(essid)
             print('[+] New Probe Request: from %s to %s' % (client, essid))
+            # ~~~~~~~~~~~~~~~~~~~~ Code Injected Here ~~~~~~~~~~~~~~~~~~~~
             with open(file_list[2],"a") as myFile:
                 myFile.write('Probe Request: from %s to %s\n' % (client, essid))
+            # ~~~~~~~~~~~~~~~~~~~~ Code Injected Here ~~~~~~~~~~~~~~~~~~~~
 
     def handle_beacon(self, pkt):
 
@@ -120,8 +125,10 @@ class iSniffer(object):
         if bssid not in self.aps:
             self.aps[bssid] = (channel, essid, bssid, enc, rssi)
             print "[+] New AP {0:5}\t{1:20}\t{2:20}\t{3:5}\t{4:4}".format(channel, essid, bssid, enc, rssi)
+        # ~~~~~~~~~~~~~~~~~~~~ Code Injected Here ~~~~~~~~~~~~~~~~~~~~
         with open(file_list[0],"a") as myFile:
-            myFile.write("[+] New AP {0:5}\t{1:20}\t{2:20}\t{3:5}\t{4:4}\n".format(channel, essid, bssid, enc, rssi));
+            myFile.write("[+] New AP {0:5}\t{1:20}\t{2:20}\t{3:5}\t{4:4}\n".format(channel, essid, bssid, enc, rssi))
+        # ~~~~~~~~~~~~~~~~~~~~ Code Injected Here ~~~~~~~~~~~~~~~~~~~~
         
 
 
@@ -195,13 +202,16 @@ class iSniffer(object):
         #for ssid in clientDict.items():
     print('Total hits per SSID:')
         pprint(clientDict)
+    # ~~~~~~~~~~~~~~~~~~~~ Code Injected Here ~~~~~~~~~~~~~~~~~~~~   
     with open(file_list[3],"a") as myFile:
         for key, val in clientDict.items():
                 myFile.write(key + ", " + str(val) + "\n");
-        
+    # ~~~~~~~~~~~~~~~~~~~~ Code Injected Here ~~~~~~~~~~~~~~~~~~~~
 
 
 if __name__ == '__main__':
+    
+    # ~~~~~~~~~~~~~~~~~~~~ Code Injected Here ~~~~~~~~~~~~~~~~~~~~
     timeStamp = int(time())
     filename_AP = FILE_EXT+ str(timeStamp) +"_AP"
     filename_Client = FILE_EXT+ str(timeStamp) +"_Client"
@@ -212,6 +222,7 @@ if __name__ == '__main__':
     for elem in file_list:
         fileTarget = open(elem, "w+")
         fileTarget.close()
+    # ~~~~~~~~~~~~~~~~~~~~ Code Injected Here ~~~~~~~~~~~~~~~~~~~~
     
     parser = ArgumentParser('iSniff', description='Tiny iSniff for RFMON under OS X',
                             formatter_class=ArgumentDefaultsHelpFormatter)
