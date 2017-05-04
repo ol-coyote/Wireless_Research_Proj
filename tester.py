@@ -191,11 +191,14 @@ class iSniffer(object):
                 else:
                     clientDict[essid] = 1
 
-        topSSID = 0
-        for ssid in clientDict.items():
-
-        print('Total hits per SSID:')
+        #topSSID = 0
+        #for ssid in clientDict.items():
+    print('Total hits per SSID:')
         pprint(clientDict)
+    with open(file_list[3],"a") as myFile:
+        for key, val in clientDict.items():
+                myFile.write(key + ", " + str(val) + "\n");
+        
 
 
 if __name__ == '__main__':
@@ -203,8 +206,9 @@ if __name__ == '__main__':
     filename_AP = FILE_EXT+ str(timeStamp) +"_AP"
     filename_Client = FILE_EXT+ str(timeStamp) +"_Client"
     filename_Probe_Req = FILE_EXT+ str(timeStamp) +"_Probe_Req"
+    filename_SSID_HITS =  FILE_EXT+ str(timeStamp) +"_SSID_Hits"
     #filename_Probe_Resp = FILE_EXT+ str(timeStamp) +"_Probe_Resp"
-    file_list = [filename_AP, filename_Client, filename_Probe_Req]#, filename_Probe_Resp]
+    file_list = [filename_AP, filename_Client, filename_Probe_Req, filename_SSID_HITS]
     for elem in file_list:
         fileTarget = open(elem, "w+")
         fileTarget.close()
