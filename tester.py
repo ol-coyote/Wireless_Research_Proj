@@ -182,7 +182,8 @@ class iSniffer(object):
               prn=self.pkt_handler,
               # lfilter=lambda p: p.haslayer(Dot11))
               lfilter=lambda p: p.haslayer(Dot11Beacon) or p.haslayer(Dot11ProbeResp) or p.haslayer(Dot11ProbeReq))
-
+    
+    # ~~~~~~~~~~~~~~~~~~~~ Code Injected Here ~~~~~~~~~~~~~~~~~~~~
     def stat(self):
         # Print results
         print('\nAP list:')
@@ -201,8 +202,7 @@ class iSniffer(object):
         #topSSID = 0
         #for ssid in clientDict.items():
     print('Total hits per SSID:')
-        pprint(clientDict)
-    # ~~~~~~~~~~~~~~~~~~~~ Code Injected Here ~~~~~~~~~~~~~~~~~~~~   
+        pprint(clientDict) 
     with open(file_list[3],"a") as myFile:
         for key, val in clientDict.items():
                 myFile.write(key + ", " + str(val) + "\n");
