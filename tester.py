@@ -226,7 +226,10 @@ if __name__ == '__main__':
     
     parser = ArgumentParser('iSniff', description='Tiny iSniff for RFMON under OS X',
                             formatter_class=ArgumentDefaultsHelpFormatter)
+    # ~~~~~~~~~~~~~~~~~~~~ Code Injected Here ~~~~~~~~~~~~~~~~~~~~
+    # default interface changed to wlan0
     parser.add_argument('-i', '--interface', default='wlan0', required=False, help='Interface to used')
+    # ~~~~~~~~~~~~~~~~~~~~ Code Injected Here ~~~~~~~~~~~~~~~~~~~~
     args = parser.parse_args()
 
     isniff = iSniffer(args.interface)
